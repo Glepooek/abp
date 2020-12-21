@@ -1,21 +1,20 @@
 import { EventEmitter, Type } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, Routes } from '@angular/router';
 import { Subject } from 'rxjs';
 import { eLayoutType } from '../enums/common';
-import { Config } from './config';
-import { NgxsStoragePluginOptions } from '@ngxs/storage-plugin';
+import { Environment } from './environment';
 
 export namespace ABP {
   export interface Root {
-    environment: Partial<Config.Environment>;
+    environment: Partial<Environment>;
+    registerLocaleFn: (locale: string) => Promise<any>;
     skipGetAppConfiguration?: boolean;
     sendNullsAsQueryParam?: boolean;
-    cultureNameLocaleFileMap?: Dictionary<string>;
-    ngxsStoragePluginOptions?: NgxsStoragePluginOptions & { key?: string[] };
   }
 
-  export interface Test {
+  export interface Test extends Partial<Root> {
     baseHref?: Router;
+    routes?: Routes;
   }
 
   export type PagedResponse<T> = {
